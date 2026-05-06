@@ -184,3 +184,13 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+// ===== KEEP SERVER NOT TO SLEEP ======
+setInterval(() => {
+  console.log("🔄 Keep alive ping");
+
+  // ping chính server của bạn
+  fetch(process.env.SELF_URL || "https://your-app.onrender.com/")
+    .then(res => console.log("keep-alive OK"))
+    .catch(err => console.log("keep-alive error"));
+}, 10 * 60 * 1000); // 10 phút
