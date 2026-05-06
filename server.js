@@ -189,7 +189,6 @@ server.listen(PORT, () => {
 setInterval(() => {
   console.log("🔄 Keep alive ping");
 
-  // ping chính server của bạn
   fetch(process.env.SELF_URL || "https://your-app.onrender.com/")
     .then(res => console.log("keep-alive OK"))
     .catch(err => console.log("keep-alive error"));
