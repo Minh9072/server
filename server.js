@@ -192,4 +192,4 @@ setInterval(() => {
   fetch(process.env.SELF_URL || "https://your-app.onrender.com/")
     .then(res => console.log("keep-alive OK"))
     .catch(err => console.log("keep-alive error"));
-}, 2 * 60 * 1000); // 2 phút
+}, 5 * 60 * 1000); // 5 phút
