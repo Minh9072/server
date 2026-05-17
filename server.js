@@ -93,22 +93,22 @@ const sendMail = async (subject, text) => {
   }
 };
 
-// ===== EMAIL FUNCTIONS =====
+// // ===== EMAIL FUNCTIONS =====
 
-const sendMail = async (subject, text) => {
-  try {
-    await transporter.sendMail({
-      from: EMAIL_USER,
-      to: ALERT_EMAIL_TO,
-      subject,
-      text,
-    });
+// const sendMail = async (subject, text) => {
+//   try {
+//     await transporter.sendMail({
+//       from: EMAIL_USER,
+//       to: ALERT_EMAIL_TO,
+//       subject,
+//       text,
+//     });
 
-    console.log("✅ Email sent:", subject);
-  } catch (err) {
-    console.log("❌ Email error:", err.message);
-  }
-};
+//     console.log("✅ Email sent:", subject);
+//   } catch (err) {
+//     console.log("❌ Email error:", err.message);
+//   }
+// };
 
 const sendFallEmail = async () => {
   await sendMail(
