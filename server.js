@@ -100,7 +100,7 @@ app.post('/api/contact', async (req, res) => {
 
     const data = await resend.emails.send({
       from: 'VitalWatch <onboarding@resend.dev>',
-      to: ['truongngocminhvt2004@gmail.com'],
+      to: ALERT_EMAIL_TO,
       subject: `Contact: ${subject}`,
       reply_to: email,
 
