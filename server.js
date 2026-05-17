@@ -28,7 +28,7 @@ const io = new Server(server, {
 });
 
 // ===== CONNECT MONGODB =====
-mongoose.connect("mongodb+srv://Hoaidat:hoaidat2004@cluster0.iarmzxb.mongodb.net/iot")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch(err => console.log("❌ DB error:", err));
 
@@ -50,13 +50,11 @@ const Vital = mongoose.model("Vital", VitalSchema);
 const Fall  = mongoose.model("Fall",  FallSchema);
 
 // ===== MQTT CONNECT =====
-const client = mqtt.connect(
-  "wss://a07a6fff42de4e72968999f448c09e7c.s1.eu.hivemq.cloud:8884/mqtt",
-  {
-    username: "hoaidatne",
-    password: "Hoaidat2004@"
-  }
-);
+
+const client = mqtt.connect(process.env.MQTT_URL, {
+  username: process.env.MQTT_USER,
+  password: process.env.MQTT_PASS
+});
 
 //====== Sent email when fall detected =====
 const sendFallEmail = async () => {
