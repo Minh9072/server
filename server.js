@@ -41,7 +41,7 @@ const {
 
 // ===== CONNECT MONGODB =====
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGO_URI)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => console.log("❌ MongoDB error:", err.message));
 
