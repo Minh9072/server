@@ -38,16 +38,6 @@ const {
   ALERT_EMAIL_TO,
 } = process.env;
 
-// ===== SLIDING WINDOW =====
-const WINDOW_SIZE = 10;
-
-const hrWindow = [];
-const spo2Window = [];
-
-let lastSentTime_hr = 0;
-let lastSentTime_spo2 = 0;
-
-const COOLDOWN_MS = 2 * 60 * 1000;
 
 // ===== CONNECT MONGODB =====
 mongoose
