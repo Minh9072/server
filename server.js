@@ -36,6 +36,7 @@ const {
   EMAIL_USER,
   EMAIL_PASS,
   ALERT_EMAIL_TO,
+  RESEND_API_KEY,
 } = process.env;
 
 
@@ -73,13 +74,24 @@ const Vital = mongoose.model("Vital", VitalSchema);
 const Fall = mongoose.model("Fall", FallSchema);
 
 // ===== NODEMAILER =====
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
-});
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const sendMail = async (subject, text) => {
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev", // dùng tạm cái này
+      to: ALERT_EMAIL_TO,
+      subject,
+      text,
+    });
+
+    console.log("✅ Email sent:", subject);
+  } catch (err) {
+    console.log("❌ Email error:", err.message);
+  }
+};
 
 // ===== EMAIL FUNCTIONS =====
 
