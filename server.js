@@ -6,7 +6,6 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-import dotenv from 'dotenv'
 const mqtt = require("mqtt");
 const nodemailer = require("nodemailer");
 
@@ -94,14 +93,6 @@ const sendMail = async (subject, text) => {
   }
 };
 
-dotenv.config()
-
-const app = express()
-
-app.use(cors())
-app.use(express.json())
-
-const resend = new Resend(process.env.RESEND_API_KEY)
 
 app.post('/api/contact', async (req, res) => {
   try {
@@ -111,7 +102,7 @@ app.post('/api/contact', async (req, res) => {
       from: 'VitalWatch <onboarding@resend.dev>',
       to: ['truongngocminhvt2004@gmail.com'],
       subject: `Contact: ${subject}`,
-      replyTo: email,
+      reply_to: email,
 
       html: `
         <h2>Liên hệ mới từ website</h2>
