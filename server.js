@@ -6,6 +6,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+import dotenv from 'dotenv'
 const mqtt = require("mqtt");
 const nodemailer = require("nodemailer");
 
@@ -73,7 +74,7 @@ const FallSchema = new mongoose.Schema({
 const Vital = mongoose.model("Vital", VitalSchema);
 const Fall = mongoose.model("Fall", FallSchema);
 
-// ===== NODEMAILER =====
+// ===== Resend =====
 const { Resend } = require("resend");
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -92,6 +93,45 @@ const sendMail = async (subject, text) => {
     console.log("❌ Email error:", err.message);
   }
 };
+
+dotenv.config()
+
+const app = express()
+
+app.use(cors())
+app.use(express.json())
+
+const resend = new Resend(process.env.RESEND_API_KEY)
+
+app.post('/api/contact', async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body
+
+    const data = await resend.emails.send({
+      from: 'VitalWatch <onboarding@resend.dev>',
+      to: ['truongngocminhvt2004@gmail.com'],
+      subject: `Contact: ${subject}`,
+      replyTo: email,
+
+      html: `
+        <h2>Liên hệ mới từ website</h2>
+
+        <p><strong>Họ tên:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Chủ đề:</strong> ${subject}</p>
+
+        <hr />
+
+        <p>${message}</p>
+      `,
+    })
+
+    res.status(200).json(data)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Send mail failed' })
+  }
+})
 
 // // ===== EMAIL FUNCTIONS =====
 
