@@ -79,6 +79,7 @@ const transporter = nodemailer.createTransport({
     user: EMAIL_USER,
     pass: EMAIL_PASS,
   },
+  family: 4,
 });
 
 // ===== EMAIL FUNCTIONS =====
