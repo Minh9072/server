@@ -27,7 +27,7 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 
 const {
-  MONGODB_URI,
+  MONGO_URI,
 
   MQTT_URL,
   MQTT_USER,
