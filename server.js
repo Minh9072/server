@@ -35,8 +35,8 @@ const {
 
   EMAIL_USER,
   EMAIL_PASS,
-  ALERT_EMAIL_TO,
-  RESEND_API_KEY,
+  ALERT_EMAIL_TO2,
+  RESEND_API_KEY2,
 } = process.env;
 
 
@@ -76,13 +76,13 @@ const Fall = mongoose.model("Fall", FallSchema);
 // ===== Resend =====
 const { Resend } = require("resend");
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY2);
 
 const sendMail = async (subject, text) => {
   try {
     await resend.emails.send({
       from: "onboarding@resend.dev", // dùng tạm cái này
-      to: ALERT_EMAIL_TO,
+      to: ALERT_EMAIL_TO2,
       subject,
       text,
     });
@@ -100,7 +100,7 @@ app.post('/api/contact', async (req, res) => {
 
     const data = await resend.emails.send({
       from: 'VitalWatch <onboarding@resend.dev>',
-      to: ALERT_EMAIL_TO,
+      to: ALERT_EMAIL_TO2,
       subject: `Contact: ${subject}`,
       reply_to: email,
 
