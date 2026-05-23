@@ -81,7 +81,7 @@ const resend = new Resend(process.env.RESEND_API_KEY2);
 const sendMail = async (subject, text) => {
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev", // dùng tạm cái này
+      from: 'VitalWatch <onboarding@resend.dev>',
       to: ALERT_EMAIL_TO2,
       subject,
       text,
