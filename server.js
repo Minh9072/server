@@ -378,6 +378,34 @@ app.get("/api/fall", async (req, res) => {
   }
 });
 
+// ===== DELETE ROUTES =====
+
+// Xóa toàn bộ lịch sử vital (HR + SpO2)
+app.delete("/api/vital", async (req, res) => {
+  try {
+    const result = await Vital.deleteMany({});
+    res.json({
+      message: "✅ Đã xóa toàn bộ dữ liệu vital",
+      deletedCount: result.deletedCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Xóa toàn bộ lịch sử fall detection
+app.delete("/api/fall", async (req, res) => {
+  try {
+    const result = await Fall.deleteMany({});
+    res.json({
+      message: "✅ Đã xóa toàn bộ dữ liệu fall",
+      deletedCount: result.deletedCount,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ===== START SERVER =====
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
