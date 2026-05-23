@@ -406,6 +406,53 @@ app.delete("/api/fall", async (req, res) => {
   }
 });
 
+// ===== EXPORT CSV =====
+
+app.get("/api/vital/export", async (req, res) => {
+  try {
+    const data = await Vital.find().sort({ time: -1 });
+
+    const rows = [
+      ["Thời gian", "Nhịp tim (bpm)", "SpO2 (%)"],
+      ...data.map(v => [
+        new Date(v.time).toLocaleString("vi-VN"),
+        v.hr,
+        v.spo2,
+      ]),
+    ];
+
+    const csv = rows.map(r => r.join(",")).join("\n");
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="vital_history_${Date.now()}.csv"`);
+    res.send("\uFEFF" + csv); // BOM để Excel đọc đúng tiếng Việt
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/api/fall/export", async (req, res) => {
+  try {
+    const data = await Fall.find().sort({ time: -1 });
+
+    const rows = [
+      ["Thời gian", "Phát hiện té ngã"],
+      ...data.map(f => [
+        new Date(f.time).toLocaleString("vi-VN"),
+        f.fall_detected ? "Có" : "Không",
+      ]),
+    ];
+
+    const csv = rows.map(r => r.join(",")).join("\n");
+
+    res.setHeader("Content-Type", "text/csv; charset=utf-8");
+    res.setHeader("Content-Disposition", `attachment; filename="fall_history_${Date.now()}.csv"`);
+    res.send("\uFEFF" + csv);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ===== START SERVER =====
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
